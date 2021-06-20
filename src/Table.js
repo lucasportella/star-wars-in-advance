@@ -13,6 +13,13 @@ function Table() {
       {Object.keys(headerData).map((planetData, index) => (
         <th key={ index }>{planetData}</th>
       ))}
+      {data.map((planet, index) => (
+        <tr key={ index }>
+          {Object.values(planet).map((value, index2) => (
+            <td key={ index2 }>{ value }</td>
+          ))}
+        </tr>
+      ))}
     </table>
   );
 }
