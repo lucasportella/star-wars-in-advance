@@ -9,6 +9,7 @@ function Filter() {
     handleChange,
     handleSearch,
     handleSelect,
+    searchByNumber,
   } = useContext(PlanetsContext);
   if (!data || !filterData) {
     return null;
@@ -53,7 +54,13 @@ function Filter() {
             data-testid="value-filter"
           />
         </label>
-        <button type="button" data-testid="button-filter">Adicionar filtro</button>
+        <button
+          onClick={ searchByNumber }
+          type="button"
+          data-testid="button-filter"
+        >
+          Adicionar filtro
+        </button>
       </form>
     </div>
   );

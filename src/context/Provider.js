@@ -36,19 +36,34 @@ const Provider = ({ children }) => {
     setFilterData(response.results);
   };
 
-  const filterPlanets = () => {
+  const filterPlanetsByName = () => {
     if (filterText !== '') {
-      const filterResult = data.filter(
+      const filterbyNameResult = data.filter(
         (planet) => planet.name.toLowerCase().includes(filterText),
       );
-      setFilterData(filterResult);
+      setFilterData(filterbyNameResult);
     } else {
       setFilterData(data);
     }
   };
 
   const handleSearch = () => {
-    filterPlanets();
+    filterPlanetsByName();
+  };
+
+  const searchByNumber = () => {
+    const filterByNumberResult = data.filter((planet) => {
+      const { column, comparison, value } = filterNumber;
+      if (comparison === 'maior que') {
+        return Number(planet[column]) > Number(value);
+      } if (comparison === 'menor que') {
+        return Number(planet[column]) < Number(value);
+      } if (comparison === 'igual a') {
+        return Number(planet[column]) === Number(value);
+      }
+      return false;
+    });
+    setFilterData(filterByNumberResult);
   };
 
   const handleChange = ({ target: { value } }) => {
@@ -68,6 +83,7 @@ const Provider = ({ children }) => {
     handleChange,
     filterNumber,
     handleSelect,
+    searchByNumber,
   };
 
   return (
