@@ -4,9 +4,16 @@ import PlanetsContext from './PlanetsContext';
 import response from '../testData';
 
 const Provider = ({ children }) => {
+  const numbersDefault = {
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  };
+
   const [data, setData] = useState();
   const [filterData, setFilterData] = useState();
   const [filterText, setFilterText] = useState('');
+  const [filterNumber, setFilterNumber] = useState(numbersDefault);
 
   const fetchPlanets = async () => {
     // try {
@@ -48,6 +55,10 @@ const Provider = ({ children }) => {
     setFilterText(value);
   };
 
+  const handleSelect = ({ target: { value, name } }) => {
+    setFilterNumber({ ...filterNumber, [name]: value });
+  };
+
   const providerContext = {
     data,
     filterData,
@@ -55,6 +66,8 @@ const Provider = ({ children }) => {
     fetchPlanets,
     handleSearch,
     handleChange,
+    filterNumber,
+    handleSelect,
   };
 
   return (
