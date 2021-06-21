@@ -8,7 +8,6 @@ function Filter() {
     filterText,
     handleChange,
     handleSearch,
-    filterNumber: { column, comparison, value},
     handleSelect,
   } = useContext(PlanetsContext);
   if (!data || !filterData) {
@@ -22,7 +21,12 @@ function Filter() {
       </button>
       <form>
         <label htmlFor="select1">
-          <select onChange={ handleSelect } name="column" id="select1" data-testid="column-filter">
+          <select
+            onChange={ handleSelect }
+            name="column"
+            id="select1"
+            data-testid="column-filter"
+          >
             <option value="population">População</option>
             <option value="orbital_period">Período de órbita</option>
             <option value="diameter">Diâmetro</option>
@@ -31,14 +35,23 @@ function Filter() {
           </select>
         </label>
         <label htmlFor="select2">
-          <select onChange={ handleSelect } name="comparison" data-testid="comparison-filter">
+          <select
+            onChange={ handleSelect }
+            name="comparison"
+            data-testid="comparison-filter"
+          >
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
             <option value="igual a">igual a</option>
           </select>
         </label>
         <label htmlFor="select3">
-          <input onChange={ handleSelect } name="value" type="number" data-testid="value-filter" />
+          <input
+            onChange={ handleSelect }
+            name="value"
+            type="number"
+            data-testid="value-filter"
+          />
         </label>
         <button type="button" data-testid="button-filter">Adicionar filtro</button>
       </form>
