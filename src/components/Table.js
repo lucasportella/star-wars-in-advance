@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
   const { data, filterData, fetchPlanets } = useContext(PlanetsContext);
-  fetchPlanets();
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
+
   if (!filterData || !data) {
     return <h1>Loading...</h1>;
   }
