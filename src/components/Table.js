@@ -4,6 +4,22 @@ import PlanetsContext from '../context/PlanetsContext';
 function Table() {
   const { data, filterData } = useContext(PlanetsContext);
 
+  const renderFilterData = () => {
+    if (filterData.length > 0) {
+      return (
+        <tbody>
+          {filterData.map((planet, index) => (
+            <tr key={ index }>
+              {Object.values(planet).map((value, index2) => (
+                <td key={ index2 }>{value}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      );
+    }
+  };
+
   return (
     <table border="1">
       <thead>
@@ -13,15 +29,7 @@ function Table() {
           ))}
         </tr>
       </thead>
-      <tbody>
-        {filterData.map((planet, index) => (
-          <tr key={ index }>
-            {Object.values(planet).map((value, index2) => (
-              <td key={ index2 }>{ value }</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
+      {renderFilterData()}
     </table>
   );
 }

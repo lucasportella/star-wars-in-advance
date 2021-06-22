@@ -10,10 +10,19 @@ const Provider = ({ children }) => {
     value: '100000',
   };
 
+  const columnSelectArray = [
+    { value: 'population', text: 'População' },
+    { value: 'orbital_period', text: 'Período de órbita' },
+    { value: 'diameter', text: 'Diâmetro' },
+    { value: 'rotation_period', text: 'Período de rotação' },
+    { value: 'surface_water', text: 'Água na superfície' },
+  ];
+
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
+  const [columnSelect, setColumnSelect] = useState(columnSelectArray);
 
   const fetchPlanets = async () => {
     // try {
@@ -50,7 +59,7 @@ const Provider = ({ children }) => {
       if (filterByNameResult.length > 0) {
         setFilterData(filterByNameResult);
       } else {
-        setFilterData(data);
+        setFilterData([]);
       }
     } else {
       setFilterData(data);
@@ -62,9 +71,11 @@ const Provider = ({ children }) => {
       const { column, comparison, value } = filterNumber;
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(value);
-      } if (comparison === 'menor que') {
+      }
+      if (comparison === 'menor que') {
         return Number(planet[column]) < Number(value);
-      } if (comparison === 'igual a') {
+      }
+      if (comparison === 'igual a') {
         return Number(planet[column]) === Number(value);
       }
       return false;
@@ -89,12 +100,14 @@ const Provider = ({ children }) => {
     filterNumber,
     handleSelect,
     searchByNumber,
+    columnSelect,
   };
 
   return (
     <PlanetsContext.Provider value={ providerContext }>
       {children}
-    </PlanetsContext.Provider>);
+    </PlanetsContext.Provider>
+  );
 };
 
 export default Provider;

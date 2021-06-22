@@ -7,6 +7,7 @@ function Filter() {
     handleChange,
     handleSelect,
     searchByNumber,
+    columnSelect,
   } = useContext(PlanetsContext);
 
   return (
