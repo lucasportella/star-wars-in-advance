@@ -25,24 +25,24 @@ const Provider = ({ children }) => {
   const [columnSelect, setColumnSelect] = useState(columnSelectArray);
 
   const fetchPlanets = async () => {
-    try {
-      const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
-        (resp) => resp.json(),
-      );
-      results.forEach((planet) => {
-        delete planet.residents;
-      });
-      setData(results);
-      setFilterData(results);
-    } catch (error) {
-      console.log('Ocorreu um erro na requisição à API.');
-    }
+    // try {
+    //   const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
+    //     (resp) => resp.json(),
+    //   );
+    //   results.forEach((planet) => {
+    //     delete planet.residents;
+    //   });
+    //   setData(results);
+    //   setFilterData(results);
+    // } catch (error) {
+    //   console.log('Ocorreu um erro na requisição à API.');
+    // }
 
-    // response.results.forEach((planet) => {
-    //   delete planet.residents;
-    // });
-    // setData(response.results);
-    // setFilterData(response.results);
+    response.results.forEach((planet) => {
+      delete planet.residents;
+    });
+    setData(response.results);
+    setFilterData(response.results);
   };
 
   useEffect(() => {
@@ -87,14 +87,6 @@ const Provider = ({ children }) => {
     setColumnSelect(newColumnSelect);
   };
 
-  // useEffect(() => {
-  //   if (filterData.length > 1) {
-  //     const { column } = filterNumber;
-  //     const newColumnSelect = columnSelect.filter((option) => option.value !== column);
-  //     setColumnSelect(newColumnSelect);
-  //   }
-  // }, [filterData]);
-
   const handleChange = ({ target: { value } }) => {
     setFilterText(value);
   };
@@ -115,6 +107,9 @@ const Provider = ({ children }) => {
     columnSelect,
   };
 
+  if (!filterData || !data || data.length === 0) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <PlanetsContext.Provider value={ providerContext }>
       {children}
