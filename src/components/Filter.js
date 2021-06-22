@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import '../App.css';
 
 function Filter() {
   const {
@@ -8,9 +9,32 @@ function Filter() {
     handleSelect,
     searchByNumber,
     columnSelect,
+    filterLayer,
+    handleDeleteLayer,
   } = useContext(PlanetsContext);
-  const { filterData, data } = useContext(PlanetsContext);
-  if (!filterData || !data || data.length === 0) { return <h1>Loading...</h1>; }
+
+  const renderFilterLayer = () => {
+    if (filterLayer.length > 0) {
+      return (
+        <span>
+          {filterLayer.map((filter, index) => (
+            <div key={ index }>
+              <span className="Filter">{filter.column}</span>
+              <span className="Filter">{filter.comparison}</span>
+              <span className="Filter">{filter.value}</span>
+              <button
+                onClick={ handleDeleteLayer }
+                value={ filter.column }
+                type="button"
+              >
+                X
+              </button>
+            </div>
+          ))}
+        </span>
+      );
+    }
+  };
   return (
     <div>
       <input onChange={ handleChange } value={ filterText } data-testid="name-filter" />
@@ -58,6 +82,7 @@ function Filter() {
           Adicionar filtro
         </button>
       </form>
+      {renderFilterLayer()}
     </div>
   );
 }

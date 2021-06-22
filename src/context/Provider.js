@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
+import ProviderHooks from '../hooks/ProviderHooks';
 import response from '../testData';
 
 const Provider = ({ children }) => {
   const numbersDefault = {
     column: 'population',
     comparison: 'maior que',
-    value: '100000',
+    value: '',
   };
 
   const columnSelectArray = [
@@ -23,6 +24,7 @@ const Provider = ({ children }) => {
   const [filterText, setFilterText] = useState('');
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
   const [columnSelect, setColumnSelect] = useState(columnSelectArray);
+  const [filterLayer, setFilterLayer] = useState([]);
 
   const fetchPlanets = async () => {
     // try {
@@ -65,8 +67,10 @@ const Provider = ({ children }) => {
   }, [filterText, data]);
 
   const searchByNumber = () => {
-    const filterByNumberResult = data.filter((planet) => {
-      const { column, comparison, value } = filterNumber;
+    const { column, comparison, value } = filterNumber;
+    setFilterLayer([...filterLayer, filterNumber]);
+    console.log(filterLayer);
+    const filterByNumberResult = filterData.filter((planet) => {
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(value);
       }
@@ -79,7 +83,6 @@ const Provider = ({ children }) => {
       return false;
     });
     setFilterData(filterByNumberResult);
-    const { column } = filterNumber;
     const newColumnSelect = columnSelect.filter((option) => option.value !== column);
     if (newColumnSelect.length > 0) {
       setFilterNumber({ ...filterNumber, column: newColumnSelect[0].value });
@@ -95,6 +98,13 @@ const Provider = ({ children }) => {
     setFilterNumber({ ...filterNumber, [name]: value });
   };
 
+  const handleDeleteLayer = ({ target: { value } }) => {
+    console.log(value)
+    const newFiltersAfterDelete = filterLayer.filter((filter) => filter.column !== value);
+    console.log(newFiltersAfterDelete)
+    setFilterLayer(newFiltersAfterDelete);
+  };
+
   const providerContext = {
     data,
     filterData,
@@ -105,6 +115,8 @@ const Provider = ({ children }) => {
     handleSelect,
     searchByNumber,
     columnSelect,
+    filterLayer,
+    handleDeleteLayer,
   };
 
   if (!filterData || !data || data.length === 0) {

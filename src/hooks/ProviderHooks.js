@@ -1,7 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 
-const ProviderHooks = () => {
+const useProviderHooks = () => {
+  const [filterLayer, setFilterLayer] = useState([]);
 
+  return [filterLayer, setFilterLayer];
 };
 
-export default ProviderHooks;
+export default useProviderHooks;
