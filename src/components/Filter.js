@@ -21,11 +21,13 @@ function Filter() {
             id="select1"
             data-testid="column-filter"
           >
-            <option value="population">População</option>
-            <option value="orbital_period">Período de órbita</option>
-            <option value="diameter">Diâmetro</option>
-            <option value="rotation_period">Período de rotação</option>
-            <option value="surface_water">Água na superfície</option>
+            {columnSelect.map((column, index) => (
+              <option
+                key={ index }
+                value={ column.value }
+              >
+                { column.text }
+              </option>))}
           </select>
         </label>
         <label htmlFor="select2">
