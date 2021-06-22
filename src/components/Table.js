@@ -1,12 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
   const { data, filterData } = useContext(PlanetsContext);
 
-  if (!filterData || !data) {
-    return <h1>Loading...</h1>;
-  }
   return (
     <table border="1">
       <thead>

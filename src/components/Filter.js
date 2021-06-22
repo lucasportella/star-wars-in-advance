@@ -3,8 +3,6 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function Filter() {
   const {
-    data,
-    filterData,
     filterText,
     handleChange,
     handleSearch,
@@ -12,9 +10,6 @@ function Filter() {
     searchByNumber,
   } = useContext(PlanetsContext);
 
-  if (!data || !filterData) {
-    return null;
-  }
   return (
     <div>
       <input onChange={ handleChange } value={ filterText } data-testid="name-filter" />

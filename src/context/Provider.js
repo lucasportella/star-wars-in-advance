@@ -11,7 +11,7 @@ const Provider = ({ children }) => {
   };
 
   const [data, setData] = useState([]);
-  const [filterData, setFilterData] = useState();
+  const [filterData, setFilterData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
 
