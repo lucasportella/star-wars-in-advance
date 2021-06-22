@@ -13,16 +13,22 @@ function Table() {
   const headerData = data[0];
   return (
     <table border="1">
-      {Object.keys(headerData).map((planetData, index) => (
-        <th key={ index }>{planetData}</th>
-      ))}
-      {filterData.map((planet, index) => (
-        <tr key={ index }>
-          {Object.values(planet).map((value, index2) => (
-            <td key={ index2 }>{ value }</td>
+      <thead>
+        <tr>
+          {Object.keys(headerData).map((planetData, index) => (
+            <th key={ index }>{planetData}</th>
           ))}
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {filterData.map((planet, index) => (
+          <tr key={ index }>
+            {Object.values(planet).map((value, index2) => (
+              <td key={ index2 }>{ value }</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 }
