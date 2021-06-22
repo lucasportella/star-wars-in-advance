@@ -83,6 +83,14 @@ const Provider = ({ children }) => {
     setFilterData(filterByNumberResult);
   };
 
+  useEffect(() => {
+    if (filterData.length > 1) {
+      const { column } = filterNumber;
+      const newColumnSelect = columnSelect.filter((option) => option.value !== column);
+      setColumnSelect(newColumnSelect);
+    }
+  }, [filterData]);
+
   const handleChange = ({ target: { value } }) => {
     setFilterText(value);
   };
@@ -97,7 +105,6 @@ const Provider = ({ children }) => {
     filterText,
     fetchPlanets,
     handleChange,
-    filterNumber,
     handleSelect,
     searchByNumber,
     columnSelect,
