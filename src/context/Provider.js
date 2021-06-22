@@ -44,10 +44,14 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     if (filterText !== '') {
-      const filterbyNameResult = data.filter(
-        (planet) => planet.name.toLowerCase().includes(filterText),
+      const filterByNameResult = data.filter(
+        (planet) => planet.name.toLowerCase().includes(filterText.toLowerCase()),
       );
-      setFilterData(filterbyNameResult);
+      if (filterByNameResult.length > 0) {
+        setFilterData(filterByNameResult);
+      } else {
+        setFilterData(data);
+      }
     } else {
       setFilterData(data);
     }
