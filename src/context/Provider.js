@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 import response from '../testData';
@@ -10,7 +10,7 @@ const Provider = ({ children }) => {
     value: '100000',
   };
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState();
   const [filterText, setFilterText] = useState('');
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
@@ -35,6 +35,11 @@ const Provider = ({ children }) => {
     setData(response.results);
     setFilterData(response.results);
   };
+  useEffect(() => {
+    if (data.length === 0) {
+      fetchPlanets();
+    }
+  });
 
   const filterPlanetsByName = () => {
     if (filterText !== '') {

@@ -11,6 +11,7 @@ function Filter() {
     handleSelect,
     searchByNumber,
   } = useContext(PlanetsContext);
+
   if (!data || !filterData) {
     return null;
   }
