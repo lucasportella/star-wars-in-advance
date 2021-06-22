@@ -4,18 +4,19 @@ import PlanetsContext from '../context/PlanetsContext';
 function Table() {
   const { data, filterData, fetchPlanets } = useContext(PlanetsContext);
   useEffect(() => {
-    fetchPlanets();
+    if (fetchPlanets) {
+      fetchPlanets();
+    }
   }, []);
 
   if (!filterData || !data) {
     return <h1>Loading...</h1>;
   }
-  const headerData = data[0];
   return (
     <table border="1">
       <thead>
         <tr>
-          {Object.keys(headerData).map((planetData, index) => (
+          {Object.keys(data[0]).map((planetData, index) => (
             <th key={ index }>{planetData}</th>
           ))}
         </tr>
