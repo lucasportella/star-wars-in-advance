@@ -11,11 +11,11 @@ const Provider = ({ children }) => {
   };
 
   const columnSelectArray = [
-    { value: 'population', text: 'População' },
-    { value: 'orbital_period', text: 'Período de órbita' },
-    { value: 'diameter', text: 'Diâmetro' },
-    { value: 'rotation_period', text: 'Período de rotação' },
-    { value: 'surface_water', text: 'Água na superfície' },
+    { value: 'population' },
+    { value: 'orbital_period' },
+    { value: 'diameter' },
+    { value: 'rotation_period' },
+    { value: 'surface_water' },
   ];
 
   const [data, setData] = useState([]);
@@ -25,31 +25,29 @@ const Provider = ({ children }) => {
   const [columnSelect, setColumnSelect] = useState(columnSelectArray);
 
   const fetchPlanets = async () => {
-    // try {
-    //   const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
-    //     (resp) => resp.json(),
-    //   );
-    //   results.forEach((planet) => {
-    //     delete planet.residents;
-    //   });
-    //   setData(results);
-    //   setFilterData(results);
-    // } catch (error) {
-    //   console.log('Ocorreu um erro na requisição à API.');
-    // }
+    try {
+      const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
+        (resp) => resp.json(),
+      );
+      results.forEach((planet) => {
+        delete planet.residents;
+      });
+      setData(results);
+      setFilterData(results);
+    } catch (error) {
+      console.log('Ocorreu um erro na requisição à API.');
+    }
 
-    response.results.forEach((planet) => {
-      delete planet.residents;
-    });
-    setData(response.results);
-    setFilterData(response.results);
+    // response.results.forEach((planet) => {
+    //   delete planet.residents;
+    // });
+    // setData(response.results);
+    // setFilterData(response.results);
   };
 
   useEffect(() => {
-    if (data.length === 0) {
-      fetchPlanets();
-    }
-  });
+    fetchPlanets();
+  }, []);
 
   useEffect(() => {
     if (filterText !== '') {

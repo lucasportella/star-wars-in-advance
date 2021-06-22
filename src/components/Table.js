@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, filterData } = useContext(PlanetsContext);
-
+  const { filterData, data } = useContext(PlanetsContext);
+  if (!filterData || !data || data.length === 0) { return <h1>Loading...</h1>; }
   const renderFilterData = () => {
     if (filterData.length > 0) {
       return (

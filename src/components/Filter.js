@@ -9,7 +9,8 @@ function Filter() {
     searchByNumber,
     columnSelect,
   } = useContext(PlanetsContext);
-
+  const { filterData, data } = useContext(PlanetsContext);
+  if (!filterData || !data || data.length === 0) { return <h1>Loading...</h1>; }
   return (
     <div>
       <input onChange={ handleChange } value={ filterText } data-testid="name-filter" />
@@ -26,7 +27,7 @@ function Filter() {
                 key={ index }
                 value={ column.value }
               >
-                { column.text }
+                { column.value }
               </option>))}
           </select>
         </label>
