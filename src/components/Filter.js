@@ -5,7 +5,6 @@ function Filter() {
   const {
     filterText,
     handleChange,
-    handleSearch,
     handleSelect,
     searchByNumber,
   } = useContext(PlanetsContext);
@@ -13,9 +12,6 @@ function Filter() {
   return (
     <div>
       <input onChange={ handleChange } value={ filterText } data-testid="name-filter" />
-      <button onClick={ handleSearch } type="button">
-        Pesquisar
-      </button>
       <form>
         <label htmlFor="select1">
           <select

@@ -35,13 +35,14 @@ const Provider = ({ children }) => {
     setData(response.results);
     setFilterData(response.results);
   };
+
   useEffect(() => {
     if (data.length === 0) {
       fetchPlanets();
     }
   });
 
-  const filterPlanetsByName = () => {
+  useEffect(() => {
     if (filterText !== '') {
       const filterbyNameResult = data.filter(
         (planet) => planet.name.toLowerCase().includes(filterText),
@@ -50,11 +51,7 @@ const Provider = ({ children }) => {
     } else {
       setFilterData(data);
     }
-  };
-
-  const handleSearch = () => {
-    filterPlanetsByName();
-  };
+  }, [filterText, data]);
 
   const searchByNumber = () => {
     const filterByNumberResult = data.filter((planet) => {
@@ -84,7 +81,6 @@ const Provider = ({ children }) => {
     filterData,
     filterText,
     fetchPlanets,
-    handleSearch,
     handleChange,
     filterNumber,
     handleSelect,
