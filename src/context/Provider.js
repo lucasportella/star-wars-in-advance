@@ -81,15 +81,21 @@ const Provider = ({ children }) => {
       return false;
     });
     setFilterData(filterByNumberResult);
+    const { column } = filterNumber;
+    const newColumnSelect = columnSelect.filter((option) => option.value !== column);
+    if (newColumnSelect.length > 0) {
+      setFilterNumber({ ...filterNumber, column: newColumnSelect[0].value });
+    } else { setFilterNumber({ ...filterNumber, column: '' }); }
+    setColumnSelect(newColumnSelect);
   };
 
-  useEffect(() => {
-    if (filterData.length > 1) {
-      const { column } = filterNumber;
-      const newColumnSelect = columnSelect.filter((option) => option.value !== column);
-      setColumnSelect(newColumnSelect);
-    }
-  }, [filterData]);
+  // useEffect(() => {
+  //   if (filterData.length > 1) {
+  //     const { column } = filterNumber;
+  //     const newColumnSelect = columnSelect.filter((option) => option.value !== column);
+  //     setColumnSelect(newColumnSelect);
+  //   }
+  // }, [filterData]);
 
   const handleChange = ({ target: { value } }) => {
     setFilterText(value);
@@ -103,6 +109,7 @@ const Provider = ({ children }) => {
     data,
     filterData,
     filterText,
+    filterNumber,
     fetchPlanets,
     handleChange,
     handleSelect,
