@@ -107,6 +107,10 @@ const Provider = ({ children }) => {
     return filterByNumberResult;
   };
 
+  useEffect(() => {
+    console.log(newResultFromLayer);
+  });
+
   const searchByNumber = () => {
     const { column, comparison, value } = filterNumber;
     setFilterLayer([...filterLayer, filterNumber]);
@@ -130,7 +134,7 @@ const Provider = ({ children }) => {
   const newFilteredResultsAfterDelete = () => {
     filterLayer.forEach((filter) => {
       const oneFilterResult = addFilter(
-        filter.column, filter.comparison, filter.value, newResultFromLayer,
+        filter.column, filter.comparison, filter.value, data,
       );
       setNewResultFromLayer(oneFilterResult);
     });
@@ -140,8 +144,8 @@ const Provider = ({ children }) => {
   const handleDeleteLayer = ({ target: { value } }) => {
     const newFiltersAfterDelete = filterLayer.filter((filter) => filter.column !== value);
     setFilterLayer(newFiltersAfterDelete);
-    const correctPositionColumn = findIndex(value);
-    setColumnSelect([...columnSelect, correctPositionColumn]);
+    // const correctPositionColumn = findIndex(value);
+    // setColumnSelect([...columnSelect, correctPositionColumn]);
     newFilteredResultsAfterDelete();
   };
 
