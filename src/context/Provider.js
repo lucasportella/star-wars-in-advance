@@ -66,9 +66,8 @@ const Provider = ({ children }) => {
     }
   }, [filterText, data]);
 
-  const searchByNumber = () => {
+  const addFilter = () => {
     const { column, comparison, value } = filterNumber;
-    setFilterLayer([...filterLayer, filterNumber]);
     const filterByNumberResult = filterData.filter((planet) => {
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(value);
@@ -81,6 +80,13 @@ const Provider = ({ children }) => {
       }
       return false;
     });
+    return filterByNumberResult;
+  };
+
+  const searchByNumber = () => {
+    const { column } = filterNumber;
+    setFilterLayer([...filterLayer, filterNumber]);
+    const filterByNumberResult = addFilter();
     setFilterData(filterByNumberResult);
     const newColumnSelect = columnSelect.filter((option) => option.value !== column);
     if (newColumnSelect.length > 0) {
