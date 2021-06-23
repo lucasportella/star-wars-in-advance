@@ -107,10 +107,6 @@ const Provider = ({ children }) => {
     return filterByNumberResult;
   };
 
-  useEffect(() => {
-    console.log(newResultFromLayer);
-  });
-
   const searchByNumber = () => {
     const { column, comparison, value } = filterNumber;
     setFilterLayer([...filterLayer, filterNumber]);
@@ -131,22 +127,23 @@ const Provider = ({ children }) => {
     setFilterNumber({ ...filterNumber, [name]: value });
   };
 
-  const newFilteredResultsAfterDelete = () => {
-    filterLayer.forEach((filter) => {
+  const newFilteredResultsAfterDelete = (newFiltersAfterDelete) => {
+    let result = data;
+    newFiltersAfterDelete.forEach((filter) => {
       const oneFilterResult = addFilter(
-        filter.column, filter.comparison, filter.value, data,
+        filter.column, filter.comparison, filter.value, result,
       );
-      setNewResultFromLayer(oneFilterResult);
+      result = oneFilterResult;
     });
-    setFilterData(newResultFromLayer);
+    setFilterData(result);
+    setFilterLayer(newFiltersAfterDelete);
   };
 
   const handleDeleteLayer = ({ target: { value } }) => {
     const newFiltersAfterDelete = filterLayer.filter((filter) => filter.column !== value);
-    setFilterLayer(newFiltersAfterDelete);
     // const correctPositionColumn = findIndex(value);
     // setColumnSelect([...columnSelect, correctPositionColumn]);
-    newFilteredResultsAfterDelete();
+    newFilteredResultsAfterDelete(newFiltersAfterDelete);
   };
 
   const providerContext = {
