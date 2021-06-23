@@ -25,6 +25,7 @@ const Provider = ({ children }) => {
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
   const [columnSelect, setColumnSelect] = useState(columnSelectArray);
   const [filterLayer, setFilterLayer] = useState([]);
+  const [newResultFromLayer, setNewResultFromLayer] = useState([]);
 
   const fetchPlanets = async () => {
     // try {
@@ -45,6 +46,7 @@ const Provider = ({ children }) => {
     });
     setData(response.results);
     setFilterData(response.results);
+    setNewResultFromLayer(response.results);
   };
 
   useEffect(() => {
@@ -66,9 +68,8 @@ const Provider = ({ children }) => {
     }
   }, [filterText, data]);
 
-  const addFilter = () => {
-    const { column, comparison, value } = filterNumber;
-    const filterByNumberResult = filterData.filter((planet) => {
+  const addFilter = (column, comparison, value, filterType) => {
+    const filterByNumberResult = filterType.filter((planet) => {
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(value);
       }
@@ -84,9 +85,9 @@ const Provider = ({ children }) => {
   };
 
   const searchByNumber = () => {
-    const { column } = filterNumber;
+    const { column, comparison, value } = filterNumber;
     setFilterLayer([...filterLayer, filterNumber]);
-    const filterByNumberResult = addFilter();
+    const filterByNumberResult = addFilter(column, comparison, value, filterData);
     setFilterData(filterByNumberResult);
     const newColumnSelect = columnSelect.filter((option) => option.value !== column);
     if (newColumnSelect.length > 0) {
@@ -103,9 +104,20 @@ const Provider = ({ children }) => {
     setFilterNumber({ ...filterNumber, [name]: value });
   };
 
+  const newFilteredResultsAfterDelete = () => {
+    filterLayer.forEach((filter) => {
+      const oneFilterResult = addFilter(
+        filter.column, filter.comparison, filter.value, newResultFromLayer,
+      );
+      setNewResultFromLayer(oneFilterResult);
+    });
+    setFilterData(newResultFromLayer);
+  };
+
   const handleDeleteLayer = ({ target: { value } }) => {
     const newFiltersAfterDelete = filterLayer.filter((filter) => filter.column !== value);
     setFilterLayer(newFiltersAfterDelete);
+    newFilteredResultsAfterDelete();
   };
 
   const providerContext = {
