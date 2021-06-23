@@ -18,7 +18,7 @@ function Filter() {
       return (
         <span>
           {filterLayer.map((filter, index) => (
-            <div key={ index }>
+            <div key={ index } data-testid="filter">
               <span className="Filter">{filter.column}</span>
               <span className="Filter">{filter.comparison}</span>
               <span className="Filter">{filter.value}</span>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
-import ProviderHooks from '../hooks/ProviderHooks';
+// import ProviderHooks from '../hooks/ProviderHooks';
 import response from '../testData';
 
 const Provider = ({ children }) => {
@@ -69,7 +69,6 @@ const Provider = ({ children }) => {
   const searchByNumber = () => {
     const { column, comparison, value } = filterNumber;
     setFilterLayer([...filterLayer, filterNumber]);
-    console.log(filterLayer);
     const filterByNumberResult = filterData.filter((planet) => {
       if (comparison === 'maior que') {
         return Number(planet[column]) > Number(value);
@@ -99,9 +98,7 @@ const Provider = ({ children }) => {
   };
 
   const handleDeleteLayer = ({ target: { value } }) => {
-    console.log(value)
     const newFiltersAfterDelete = filterLayer.filter((filter) => filter.column !== value);
-    console.log(newFiltersAfterDelete)
     setFilterLayer(newFiltersAfterDelete);
   };
 
