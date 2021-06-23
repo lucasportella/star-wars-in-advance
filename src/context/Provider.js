@@ -11,13 +11,36 @@ const Provider = ({ children }) => {
     value: '',
   };
 
+  const generateCorrectOrder = (array) => {
+    const isSmaller = -1;
+    return array.sort((a, b) => {
+      if (a.arrayIndex > b.arrayIndex) {
+        return 1;
+      }
+      if (a.arrayIndex < b.arrayIndex) {
+        return isSmaller;
+      }
+      return 0;
+    });
+  };
+
   const columnSelectArray = [
-    { value: 'population' },
-    { value: 'orbital_period' },
-    { value: 'diameter' },
-    { value: 'rotation_period' },
-    { value: 'surface_water' },
+    { valor: 'population', arrayIndex: 0 },
+    { valor: 'orbital_period', arrayIndex: 1 },
+    { valor: 'diameter', arrayIndex: 2 },
+    { valor: 'rotation_period', arrayIndex: 3 },
+    { valor: 'surface_water', arrayIndex: 4 },
   ];
+
+  const findIndex = (valor) => {
+    let objectWithIndex = {};
+    columnSelectArray.forEach((column) => {
+      if (column.valor === valor) {
+        objectWithIndex = { valor, arrayIndex: column.arrayIndex };
+      }
+    });
+    return objectWithIndex;
+  };
 
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -89,9 +112,9 @@ const Provider = ({ children }) => {
     setFilterLayer([...filterLayer, filterNumber]);
     const filterByNumberResult = addFilter(column, comparison, value, filterData);
     setFilterData(filterByNumberResult);
-    const newColumnSelect = columnSelect.filter((option) => option.value !== column);
+    const newColumnSelect = columnSelect.filter((option) => option.valor !== column);
     if (newColumnSelect.length > 0) {
-      setFilterNumber({ ...filterNumber, column: newColumnSelect[0].value });
+      setFilterNumber({ ...filterNumber, column: newColumnSelect[0].valor });
     } else { setFilterNumber({ ...filterNumber, column: '' }); }
     setColumnSelect(newColumnSelect);
   };
@@ -117,6 +140,8 @@ const Provider = ({ children }) => {
   const handleDeleteLayer = ({ target: { value } }) => {
     const newFiltersAfterDelete = filterLayer.filter((filter) => filter.column !== value);
     setFilterLayer(newFiltersAfterDelete);
+    const correctPositionColumn = findIndex(value);
+    setColumnSelect([...columnSelect, correctPositionColumn]);
     newFilteredResultsAfterDelete();
   };
 
@@ -132,6 +157,7 @@ const Provider = ({ children }) => {
     columnSelect,
     filterLayer,
     handleDeleteLayer,
+    generateCorrectOrder,
   };
 
   if (!filterData || !data || data.length === 0) {

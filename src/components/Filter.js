@@ -11,8 +11,9 @@ function Filter() {
     columnSelect,
     filterLayer,
     handleDeleteLayer,
+    generateCorrectOrder,
   } = useContext(PlanetsContext);
-
+  const columnSelectCorrectOrder = generateCorrectOrder(columnSelect);
   const renderFilterLayer = () => {
     if (filterLayer.length > 0) {
       return (
@@ -46,12 +47,12 @@ function Filter() {
             id="select1"
             data-testid="column-filter"
           >
-            {columnSelect.map((column, index) => (
+            {columnSelectCorrectOrder.map((column, index) => (
               <option
                 key={ index }
-                value={ column.value }
+                value={ column.valor }
               >
-                { column.value }
+                { column.valor }
               </option>))}
           </select>
         </label>
